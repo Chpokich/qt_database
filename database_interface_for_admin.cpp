@@ -124,7 +124,7 @@ void database_interface_for_admin::on_pushButton_show_all_info_clicked()
     qDebug()<<"START database_interface_for_admin";
     connect(Input_user_name, &input_user_name::idEntered, this, &database_interface_for_admin::on_id_entered);
     Input_user_name->exec();
-    query->prepare("SELECT "
+    /*query->prepare("SELECT "
                    "a.id AS auth_id, a.login, a.user_type, "
                    "d.id AS driver_id, d.\"Фамилия \", d.\"Имя\", d.\"Отчество \", d.\"Возраст\", d.\"Пол\", d.\"Рабочие_дни\", "
                    "r.id AS route_id, r.\"Номер_маршрута\", r.\"Время_движения\", "
@@ -133,8 +133,8 @@ void database_interface_for_admin::on_pushButton_show_all_info_clicked()
                    "LEFT JOIN course_work.\"Водители\" d ON a.id = d.authorization_id "
                    "LEFT JOIN course_work.\"Маршрут\" r ON a.id = r.authorization_id "
                    "LEFT JOIN course_work.\"Остановки\" o ON r.id = o.\" marshrut_id\" "
-                   "WHERE a.id = :id;");
-
+                   "WHERE a.id = :id;");*/
+    query->prepare("SELECT * FROM course_work.driver_routes_view WHERE auth_id = :id;");
     query->bindValue(":id", this->take_id);  // Подставьте нужный ID
     qDebug()<<"take_id in admin = "<<this->take_id;
     if (query->exec()) {
